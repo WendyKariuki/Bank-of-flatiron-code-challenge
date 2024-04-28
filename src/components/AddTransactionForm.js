@@ -7,7 +7,7 @@ function AddTransactionForm() {
   const [amount, setAmount] = useState("")
   
   function handleSubmit(e) {
-    fetch("http://localhost:8001/transactions", {
+    fetch("https://bank-of-flatiron-code-challenge-3.onrender.com/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
