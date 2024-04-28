@@ -33,14 +33,26 @@ function AccountContainer() {
     .catch((error) => console.error("Error deleting transaction: ", error));
   };
   
-
   const handleSort = (sortBy) => {
     fetch(`https://bank-of-flatiron-code-challenge-3.onrender.com/transactions?sortBy=${sortBy}`)
       .then((resp) => resp.json())
-      .then((data) => setTransactions(data))
+      .then((data) => {
+        const sortedTransactions = data.sort((a, b) => {
+          const fieldValueA = a[sortBy].toLowerCase();
+          const fieldValueB = b[sortBy].toLowerCase();
+          if (fieldValueA < fieldValueB) {
+            return -1;
+          }
+          if (fieldValueA > fieldValueB) {
+            return 1;
+          }
+          return 0;
+        });
+        setTransactions(sortedTransactions);
+      })
       .catch((error) => console.error("Error fetching sorted data: ", error));
   };
-
+  
   const handleAddTransaction = (transaction) => {
     setTransactions([...transactions, transaction])
   };
